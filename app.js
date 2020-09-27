@@ -6,6 +6,19 @@ const getRandomValue = (array) => {
     return array[randomIndex];
 }
 
+const lightUp = (divPanelClass) => {
+    console.log("light up");
+    divPanelClass.add("bright");
+
+}
+
+
+const lightDown = (divPanelClass) => {
+    console.log("light down");
+    divPanelClass.remove("bright");
+}
+
+
 const aRound = () => {
     var randomColors = [];
     for(var i = 0; i < currentRound + 1; i++){
@@ -15,17 +28,21 @@ const aRound = () => {
     for(var j = 0; j < randomColors.length; j++){
         randomDivs.push(document.querySelector("#"+randomColors[j]));
     }
-    for(randomDiv of randomDivs){
-        console.log(randomDiv.classList)
-        randomDiv.classList.add("bright");
-        console.log(randomDiv.classList);
+    console.log(randomDivs)
+
+    for(var i = 0; i < randomDivs.length; i++){
+        console.log("enter loop")
+        currClasslist = randomDivs[i].classList;
+        console.log(randomDivs[i]);
         setTimeout(() => {
-
-        }, 10000);
-        randomDiv.setAttribute("class","panel");
-
+            lightUp(currClasslist);
+        },(1000 + (i * 2000)))
+        setTimeout(() => {
+            lightDown(currClasslist);
+        },(1500 + (i * 2000)))
+        
+        
     }
-    currentRound++;
 }
 
 aRound();
