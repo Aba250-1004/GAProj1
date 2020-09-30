@@ -11,7 +11,6 @@ function getRandomValue (array){
 
 function lightUp (divPanelClass) {
     divPanelClass.add("bright");
-
 }
 
 
@@ -19,13 +18,20 @@ function lightDown (divPanelClass) {
     divPanelClass.remove("bright");
 }
 
-const flash = (currClasslist) => {
+function flash (currClasslist) {
     setTimeout(() => {
         lightUp(currClasslist);
     },(1000 + (i * 2000)))
     setTimeout(() => {
         lightDown(currClasslist);
     },(1500 + (i * 2000)))
+}
+
+function quickFlash(currClasslist) {
+    lightUp(currClasslist);
+    setTimeout(() => {
+        lightDown(currClasslist);
+    },300)
 }
 
 
@@ -36,7 +42,7 @@ async function countDown (randomDivs) {
     let allowClick = document.querySelector("#allowClick")
     
     seconds = 10 + 5*(currentRound - 1) + 1.5*(currentRound+1); 
-    setInterval(function() {
+    let myInterval = setInterval(function() {
     //console.log(seconds);
     h1.innerHTML= seconds;
   
@@ -45,13 +51,15 @@ async function countDown (randomDivs) {
         allowClick.innerHTML = "Go Go Go"
         for(div of divs){
             div.addEventListener("click",(event)=> {
+                console.log(event.target)
                 userClicks.push(event.target);
+                quickFlash(event.target.classList)
             })
         }
         seconds -= .25;
     }else if (seconds <= 0) {
+      clearInterval(myInterval);
       allowClick.innerHTML = "No Clicks"
-      clearInterval(countDown);
       // remove click listeners
       for(div of divs){
         div.removeEventListener("click",() => {
@@ -59,10 +67,15 @@ async function countDown (randomDivs) {
         });
       }
       console.log(userClicks,randomDivs)
-
       return compareTo(userClicks,randomDivs);
     }else{
         seconds-=.25;
+        // submit button click
+        let submitButton = document.querySelector("#submit")
+        submitButton.addEventListener("click", () => {
+            seconds = 0;
+         })
+        
     }
   }, 250);
 }
@@ -71,15 +84,15 @@ function compareTo (userInput,computerInput) {
     if (userInput.length === computerInput.length){
         for(let i = 0; i < userInput.length; i++){
             if(userInput[i] !== computerInput[i]){
-                console.log("false0")
-                return false;
+                return gameOver();
             }
         }
-        console.log("true")
-        return true;
+        currentRound++;
+        let h2Round = document.querySelector("#rightV");
+        h2Round.innerHTML = "<h2>Round " + currentRound + "</h2>";
+        aRound();
     }else{
-        console.log("false1")
-        return false;
+        return gameOver();
     }
 }
 
@@ -99,15 +112,10 @@ async function aRound () {
         flash(currClasslist);
     }
     let userMatch = await countDown(randomDivs); 
-    console.log("here")
-    console.log(userMatch)
+}
 
-
-    
-    
-    
-
-    
+function gameOver () {
+ 
 }
 
 let game = aRound();
