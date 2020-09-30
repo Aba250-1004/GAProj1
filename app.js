@@ -34,10 +34,15 @@ function quickFlash(currClasslist) {
     },300)
 }
 
+function pushUserClicks(event){
+    console.log(event.target);
+    userClicks.push(event.target);
+    quickFlash(event.target.classList)
+    console.log(userClicks);
+}
 
 async function countDown (randomDivs) {
     let h1 = document.querySelector("h1");
-    let userClicks = [];
     let divs = document.querySelectorAll(".panel");
     let allowClick = document.querySelector("#allowClick")
     
@@ -50,11 +55,7 @@ async function countDown (randomDivs) {
     if (seconds === (10 + 5*(currentRound - 1))){ 
         allowClick.innerHTML = "Go Go Go"
         for(div of divs){
-            div.addEventListener("click",(event)=> {
-                console.log(event.target)
-                userClicks.push(event.target);
-                quickFlash(event.target.classList)
-            })
+            div.addEventListener("click",pushUserClicks)
         }
         seconds -= .25;
     }else if (seconds <= 0) {
@@ -62,11 +63,10 @@ async function countDown (randomDivs) {
       allowClick.innerHTML = "No Clicks"
       // remove click listeners
       for(div of divs){
-        div.removeEventListener("click",() => {
-
-        });
+          // this is not working fix it asap
+        div.removeEventListener("click",pushUserClicks);
       }
-      console.log(userClicks,randomDivs)
+      console.log(userClicks)
       return compareTo(userClicks,randomDivs);
     }else{
         seconds-=.25;
@@ -75,7 +75,12 @@ async function countDown (randomDivs) {
         submitButton.addEventListener("click", () => {
             seconds = 0;
          })
-        
+        let resetButton = document.querySelector("#reset");
+        resetButton.addEventListener("click",() => {
+            userClicks = [];
+            console.log("click")
+            secounds = 0;
+        })
     }
   }, 250);
 }
@@ -90,6 +95,7 @@ function compareTo (userInput,computerInput) {
         currentRound++;
         let h2Round = document.querySelector("#rightV");
         h2Round.innerHTML = "<h2>Round " + currentRound + "</h2>";
+        userClicks = [];
         aRound();
     }else{
         return gameOver();
