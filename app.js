@@ -54,13 +54,13 @@ async function countDown (randomDivs) {
     let divs = document.querySelectorAll(".panel");
     let allowClick = document.querySelector("#allowClick")
     
-    seconds = 10 + 5*(currentRound - 1) + 1.5*(currentRound+1); 
+    seconds = 10 + 2*(currentRound - 1) + 1.5*(currentRound+1); 
     let myInterval = setInterval(function() {
     //console.log(seconds);
     h1.innerHTML= seconds;
   
     // If the count down is finished, write some text
-    if (seconds === (10 + 5*(currentRound - 1))){ 
+    if (seconds === (10 + 2*(currentRound - 1))){ 
         allowClick.innerHTML = "User Turn"
         //allowClick.style.color = "gold";
         allowClick.style.border = "3px solid gold";
@@ -98,6 +98,9 @@ function compareTo (userInput,computerInput) {
     if (userInput.length === computerInput.length){
         for(let i = 0; i < userInput.length; i++){
             if(userInput[i] !== computerInput[i]){
+                let h2Round = document.querySelector("#rightV");
+                h2Round.innerHTML = "<h2>You Lose!</h2>";
+                h2Round.style.color = "white"
                 return gameOver();
             }
         }
@@ -115,6 +118,9 @@ function compareTo (userInput,computerInput) {
             isReset = false;
             aRound();
         }else{
+            let h2Round = document.querySelector("#rightV");
+            h2Round.innerHTML = "<h2>You Lose!</h2>";
+            h2Round.style.color = "white"
             return gameOver();
         }
     }
