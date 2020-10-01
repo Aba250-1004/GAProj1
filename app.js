@@ -2,6 +2,7 @@ let colors = ["yellow","blue","red","green"];
 let currentRound = 1;
 let isCountDone = false;
 let userClicks = [];
+let isReset = false;
 
 
 function getRandomValue (array){
@@ -35,10 +36,17 @@ function quickFlash(currClasslist) {
 }
 
 function pushUserClicks(event){
-    console.log(event.target);
+    //console.log(event.target);
     userClicks.push(event.target);
     quickFlash(event.target.classList)
-    console.log(userClicks);
+    //console.log(userClicks);
+}
+
+function resetClick(){
+    //console.log("here")
+    userClicks = [];
+    seconds = 0;
+    isReset = true;
 }
 
 async function countDown (randomDivs) {
@@ -53,20 +61,27 @@ async function countDown (randomDivs) {
   
     // If the count down is finished, write some text
     if (seconds === (10 + 5*(currentRound - 1))){ 
-        allowClick.innerHTML = "Go Go Go"
+        allowClick.innerHTML = "User Turn"
+        //allowClick.style.color = "gold";
+        allowClick.style.border = "3px solid gold";
         for(div of divs){
             div.addEventListener("click",pushUserClicks)
         }
+        let resetButton = document.querySelector("#reset");
+        resetButton.addEventListener("click",resetClick)
         seconds -= .25;
     }else if (seconds <= 0) {
       clearInterval(myInterval);
-      allowClick.innerHTML = "No Clicks"
+      allowClick.innerHTML = "CPU Turn"
+      allowClick.style.color = "black";
+      allowClick.style.border = "3px solid black";
+      let resetButton = document.querySelector("#reset");
+      resetButton.removeEventListener("click",resetClick)
       // remove click listeners
       for(div of divs){
           // this is not working fix it asap
         div.removeEventListener("click",pushUserClicks);
       }
-      console.log(userClicks)
       return compareTo(userClicks,randomDivs);
     }else{
         seconds-=.25;
@@ -75,12 +90,6 @@ async function countDown (randomDivs) {
         submitButton.addEventListener("click", () => {
             seconds = 0;
          })
-        let resetButton = document.querySelector("#reset");
-        resetButton.addEventListener("click",() => {
-            userClicks = [];
-            console.log("click")
-            secounds = 0;
-        })
     }
   }, 250);
 }
@@ -98,7 +107,16 @@ function compareTo (userInput,computerInput) {
         userClicks = [];
         aRound();
     }else{
-        return gameOver();
+        if(isReset){
+            currentRound = 1;
+            let h2Round = document.querySelector("#rightV");
+            h2Round.innerHTML = "<h2>Round " + currentRound + "</h2>";
+            userClicks = [];
+            isReset = false;
+            aRound();
+        }else{
+            return gameOver();
+        }
     }
 }
 
@@ -112,7 +130,7 @@ async function aRound () {
     for(let j = 0; j < randomColors.length; j++){
         randomDivs.push(document.querySelector("#"+randomColors[j]));
     }
-    console.log(randomDivs)
+    //console.log(randomDivs)
     for(i = 0; i < randomDivs.length; i++){
         currClasslist = randomDivs[i].classList;
         flash(currClasslist);
