@@ -53,7 +53,7 @@ async function countDown (randomDivs) {
     let divs = document.querySelectorAll(".panel");
     let allowClick = document.querySelector("#allowClick")
     
-    seconds = 10 + 2*(currentRound - 1) + 1.5*(currentRound+1); 
+    seconds = 10 + 2*(currentRound - 1) + 2*(currentRound+1); 
     let myInterval = setInterval(function() {
     //console.log(seconds);
     h1.innerHTML= seconds;
