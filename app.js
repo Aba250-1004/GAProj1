@@ -1,6 +1,5 @@
 let colors = ["yellow","blue","red","green"];
 let currentRound = 1;
-let isCountDone = false;
 let userClicks = [];
 let isReset = false;
 
@@ -94,13 +93,17 @@ async function countDown (randomDivs) {
   }, 250);
 }
 
+
+function youLose(){
+    let h2Round = document.querySelector("#rightV");
+    h2Round.innerHTML = "<h2>You Lose!</h2>";
+    h2Round.style.color = "white"
+}
 function compareTo (userInput,computerInput) {
     if (userInput.length === computerInput.length){
         for(let i = 0; i < userInput.length; i++){
             if(userInput[i] !== computerInput[i]){
-                let h2Round = document.querySelector("#rightV");
-                h2Round.innerHTML = "<h2>You Lose!</h2>";
-                h2Round.style.color = "white"
+                youLose();
                 return gameOver();
             }
         }
@@ -118,9 +121,7 @@ function compareTo (userInput,computerInput) {
             isReset = false;
             aRound();
         }else{
-            let h2Round = document.querySelector("#rightV");
-            h2Round.innerHTML = "<h2>You Lose!</h2>";
-            h2Round.style.color = "white"
+            youLose();
             return gameOver();
         }
     }
