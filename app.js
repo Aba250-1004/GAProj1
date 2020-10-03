@@ -54,9 +54,10 @@ async function countDown (randomDivs) {
     let allowClick = document.querySelector("#allowClick")
     
     seconds = 10 + 2*(currentRound - 1) + 2*(currentRound+1); 
+    displaySeconds = 10 + 2*(currentRound - 1);
     let myInterval = setInterval(function() {
     //console.log(seconds);
-    h1.innerHTML= seconds;
+    h1.innerHTML = displaySeconds;
   
     // If the count down is finished, write some text
     if (seconds === (10 + 2*(currentRound - 1))){ 
@@ -68,7 +69,7 @@ async function countDown (randomDivs) {
         }
         let resetButton = document.querySelector("#reset");
         resetButton.addEventListener("click",resetClick)
-        seconds -= .25;
+        displaySeconds -= .25;
     }else if (seconds <= 0) {
       clearInterval(myInterval);
       allowClick.innerHTML = "CPU Turn"
@@ -83,14 +84,20 @@ async function countDown (randomDivs) {
       }
       return compareTo(userClicks,randomDivs);
     }else{
-        seconds-=.25;
         // submit button click
         let submitButton = document.querySelector("#submit")
         submitButton.addEventListener("click", () => {
-            seconds = 0;
+            displaySeconds = 0;
+            seconds = 0
          })
+        
     }
-  }, 250);
+    seconds-=.25;
+    if (seconds < (10 + 2*(currentRound - 1)) && seconds > 0){
+        displaySeconds -= .25;
+    }
+  }
+  , 250);
 }
 
 
