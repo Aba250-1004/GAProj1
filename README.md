@@ -4,7 +4,7 @@
 
 ---
 ## Concepts
-    My project is a pattern matching game where the user has to click in the correct order what was "flashed" and then they can check if they're correct.  If they're correct they would go to the next round, but if they lose the round display will change to say you lose.  There is a reset button that allows a user to reset a game while they are still in a game,  the reset button will also only work when it is the users turn.  If they have lost this will not work they will have to refresh the page for a new game.  Everytime the user clicks a panel after the computer has displayed the panels and order that they must click the panel will flash if the computer is still going then nothing will happen. 
+My project is a pattern matching game where the user has to click in the correct order what was "flashed" and then they can check if they're correct.  If they're correct they would go to the next round, but if they lose the round display will change to say you lose.  There is a reset button that allows a user to reset a game while they are still in a game,  the reset button will also only work when it is the users turn.  If they have lost this will not work they will have to refresh the page for a new game.  Everytime the user clicks a panel after the computer has displayed the panels and order that they must click the panel will flash if the computer is still going then nothing will happen. 
 
 ## Technologies Used
 * HTML 
@@ -17,7 +17,7 @@ So what I did for my html and CSS was format it using flex which I thought was t
 
 #### User stories
 
-    As a user you will click the pattern that is displayed to you once the the count down has started/ when the CPU turn changes to user turn.  If the user guesses correctly they go to the next round which they will see on the top right hand corner.  But if they lose the round in the top right hand corner will change to a you lose message.
+As a user you will click the pattern that is displayed to you once the the count down has started/ when the CPU turn changes to user turn.  If the user guesses correctly they go to the next round which they will see on the top right hand corner.  But if they lose the round in the top right hand corner will change to a you lose message.
 
 #### Development Plan
 
