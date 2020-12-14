@@ -1,4 +1,4 @@
-# App Title: Simon Says! 
+# Simon Says! The Pattern Matching Game
 
 ### App Demo: https://aba250-1004.github.io/GAProj1-Amal-and-Mateen/
 
